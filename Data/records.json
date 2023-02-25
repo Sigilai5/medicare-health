@@ -1,7 +1,1 @@
-[{
-    "id":1,
-    "patientid":1,
-    "condition":"Acidity",
-    "description":"Pain in the stomach",
-    "prescription":["Nexium, Panadol"]
-}]
+[{"id":1,"patientid":1,"condition":" Acidity","description":"Pain in the abdomen","prescription":["Nexium, Panadol"]},{"id":2,"patientid":2,"condition":" Acidity","description":"Pain in the abdomen","prescription":["Nexium, Panadol"]}]
