@@ -166,12 +166,12 @@ app.post('/addPatient', (req,res)=>{
 
 
   if (req.session.user_type==='doctor') {
-    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
-    const response=doctor.addPatient(patient)
+    const doctor= new Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const response=doctor.setPatient(patient)
     res.send(response);
   }else if (req.session.user_type==='receptionist') {
-    const receptionist=Receiptionist(req.session.userId,req.session.username,req.session.user_type)
-    const response=receptionist.addPatient(patient)
+    const receptionist= new Receiptionist(req.session.userId,req.session.username,req.session.user_type)
+    const response=receptionist.setPatient(patient)
     res.send(response);
   }
 
@@ -183,13 +183,13 @@ app.delete('/deletePatient', (req,res)=>{
     res.redirect('/login');
     return;
   }
-  if (req.session.user_type==='doctor') {
-    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
-    const response=doctor.deletePatient(req.body.id)
+  if (req.session.user_type=='doctor') {
+    const doctor= new Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const response=doctor.deletePatient(parseInt(req.body.id))
     res.send(response);
-  }else if (req.session.user_type==='receptionist') {
-    const receptionist=Receiptionist(req.session.userId,req.session.username,req.session.user_type)
-    const response=receptionist.deletePatient(req.body.id)
+  }else if (req.session.user_type=='receptionist') {
+    const receptionist=new Receiptionist(req.session.userId,req.session.username,req.session.user_type)
+    const response=receptionist.deletePatient(parseInt(req.body.id))
     res.send(response);
   }
 });
