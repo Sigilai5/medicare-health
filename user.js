@@ -32,29 +32,19 @@ class User {
       let patients = [];
       patients = JSON.parse(fs.readFileSync('./Data/patients.json', 'utf8'));
       if (patients.find(usr => usr.id === patient.id)) {
-        return { error: 'Id is taken!' };
+        const existingPatient = patients.find(storedRecord => storedRecord.id === patient.id);
+        patients.pop(existingRecord)
+        patients.push(patient)
+        fs.writeFileSync('./Data/patients.json', JSON.stringify(patients));
+        return { message: 'Patient updated!' };
       }else{
         patients.push(patient)
         fs.writeFileSync('./Data/patients.json', JSON.stringify(patients));
-        return patients
+        return { message: 'Patient added!' }
       }
     };
 
 
-    updatePatient= (updatedPatient)=>{
-      let patients = [];
-      patients = JSON.parse(fs.readFileSync('./Data/patients.json'));
-      
-      if (!patients.find(patient => patient.id === updatedPatient.id)){
-        return { error: ' The patient does not exist!!' };
-      }else{
-        const existingPatient = patients.find(storedRecord => storedRecord.id === updatedPatient.id);
-        patients.pop(existingRecord)
-        patients.push(updatedRecord)
-        fs.writeFileSync('./Data/records.json', JSON.stringify(records));
-        return record
-      }
-    };
 
     deletePatient= (patientId)=>{
       let patients = [];
@@ -65,7 +55,7 @@ class User {
         const patient = patients.find(u => u.id === patientId);
         patients.pop(patient)
         fs.writeFileSync('./Data/patients.json', JSON.stringify(patients));
-        return patients
+        return { message: 'Patient deleted!' }
       }
     };
   }
@@ -90,32 +80,19 @@ class User {
             return { error: ' The patient does not exist!!' };
       }
       if (records.find(storedRecord => storedRecord.id === newRecord.id)) {
-        return { error: ' Record already exists!!' };
+        const existingRecord = records.find(storedRecord => storedRecord.id === newRecord.id);
+        records.pop(existingRecord)
+        records.push(newRecord)
+        fs.writeFileSync('./Data/records.json', JSON.stringify(records));
+        return {message:"Record updated"}
       }else{
         records.push(newRecord)
         fs.writeFileSync('./Data/records.json', JSON.stringify(records));
-        return record
+        return {message:"Record added"}
       }
     };
 
-    updateRecords= (updatedRecord)=>{
-      let records = [];
-      records = JSON.parse(fs.readFileSync('./Data/records.json'));
-      const patients = JSON.parse(fs.readFileSync('./Data/patients.json'));
-      if (!patients.find(patient => patient.id === updatedRecord.patientid)){
-        return { error: ' The patient does not exist!!' };
-        }
-        
-      if (!records.find(storedRecord => storedRecord.id === updatedRecord.id)) {
-        return { error: ' Record does not exists!!' };
-      }else{
-        const existingRecord = records.find(storedRecord => storedRecord.id === updatedRecord.id);
-        records.pop(existingRecord)
-        records.push(updatedRecord)
-        fs.writeFileSync('./Data/records.json', JSON.stringify(records));
-        return record
-      }
-    };
+  
 
     deleteRecords= (recordId)=>{
       let records = [];
@@ -151,15 +128,7 @@ class User {
     
   }
 
-
-  doc= new Doctor(1,"abdi","doctor");
-  const patient={"id":2,"name":"Sensei Cop","age":32,"gender":"male","contact":"07503476484","address":"Mombasa"}
-  const record = {
-    id: 2,
-    patientid: 2,
-    condition: ' Acidity',
-    description: 'Pain in the abdomen',
-    prescription: [ 'Nexium, Panadol' ]
-  }
-  
-  console.log(doc.updateRecords(record))
+module.exports={
+  Receiptionist:Receiptionist,
+  Doctor:Doctor
+}

@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const fs = require('fs');
 var hbs = require('hbs');
+const { Doctor,Receiptionist }= require('./user.js');
 
 const app = express();
 
@@ -100,6 +101,148 @@ app.post('/register', (req, res) => {
   }
 
 });
+
+
+// Patient routes
+
+//get a specific patient
+
+app.get('/getPatient',(req,res)=>{
+  if (!req.session.userId) {
+    res.redirect('/login');
+    return;
+  }
+  
+  if (req.session.user_type==='doctor') {
+    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const response=doctor.fetchPatient(req.body.id)
+    res.send(response);
+  }else if (req.session.user_type==='receptionist') {
+    const receptionist=Receiptionist(req.session.userId,req.session.username,req.session.user_type)
+    const response=receptionist.fetchPatient(req.body.id)
+    res.send(response);
+  }
+
+});
+
+// add/update a patient
+
+app.post('/addPatient', (req,res)=>{
+  if (!req.session.userId) {
+    res.redirect('/login');
+    return;
+  }
+
+  const { name, age, contact, gender,address } = req.body;
+  let patients = [];
+  patients = JSON.parse(fs.readFileSync('./Data/patients.json'));
+
+  const patient={
+    id: patients.length +1,
+    name:name,
+    age:age,
+    gender:gender,
+    contact:contact,
+    address:address
+  }
+
+
+  if (req.session.user_type==='doctor') {
+    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const response=doctor.addPatient(patient)
+    res.send(response);
+  }else if (req.session.user_type==='receptionist') {
+    const receptionist=Receiptionist(req.session.userId,req.session.username,req.session.user_type)
+    const response=receptionist.addPatient(patient)
+    res.send(response);
+  }
+
+});
+
+//delete a patient 
+app.delete('/deletePatient', (req,res)=>{
+  if (!req.session.userId) {
+    res.redirect('/login');
+    return;
+  }
+  if (req.session.user_type==='doctor') {
+    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const response=doctor.deletePatient(req.body.id)
+    res.send(response);
+  }else if (req.session.user_type==='receptionist') {
+    const receptionist=Receiptionist(req.session.userId,req.session.username,req.session.user_type)
+    const response=receptionist.deletePatient(req.body.id)
+    res.send(response);
+  }
+});
+
+
+// Records routes
+
+//get a specific record
+
+app.get('/getRecord',(req,res)=>{
+  if (!req.session.userId) {
+    res.redirect('/login');
+    return;
+  }
+  
+  if (req.session.user_type==='doctor') {
+    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const response=doctor.fetchRecords(req.body.id)
+    res.send(response);
+  }else if (req.session.user_type==='receptionist') {
+    return res.status(400).json({ error: "You are not allowed to access Records" });
+  }
+
+});
+
+// add/update a record
+
+app.post('/addrecord', (req,res)=>{
+  if (!req.session.userId) {
+    res.redirect('/login');
+    return;
+  }
+
+  const { patientid, condition, description, gender,prescription } = req.body;
+  let records = [];
+  records = JSON.parse(fs.readFileSync('./Data/records.json'));
+
+  const record={
+    id: records.length +1,
+    patientid:patientid,
+    condition:condition,
+    description:description,
+    prescription:prescription
+  }
+
+
+  if (req.session.user_type==='doctor') {
+    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const response=doctor.setRecords(record)
+    res.send(response);
+  }else if (req.session.user_type==='receptionist') {
+    return res.status(400).json({ error: "You are not allowed to access Records" });
+  }
+
+});
+
+//delete a record 
+app.delete('/deleteRecord', (req,res)=>{
+  if (!req.session.userId) {
+    res.redirect('/login');
+    return;
+  }
+  if (req.session.user_type==='doctor') {
+    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const response=doctor.deleteRecord(req.body.id)
+    res.send(response);
+  }else if (req.session.user_type==='receptionist') {
+    return res.status(400).json({ error: "You are not allowed to access Records" });
+  }
+});
+
 
 app.get('/logout', (req, res) => {
   // Destroy the session and redirect to the login page
