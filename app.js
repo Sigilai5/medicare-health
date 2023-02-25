@@ -57,7 +57,6 @@ app.get('/dashboard', (req, res) => {
   const user = users.find(u => u.id === req.session.userId);
 
   // Serve the dashboard HTML page and replace [username] with the actual username
-  console.log(patients)
   res.render('dashboard', {patients:patients});
 
   // const dashboardPage = fs.readFileSync(__dirname + '/public/dashboard.html', 'utf8');

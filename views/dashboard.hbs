@@ -48,12 +48,14 @@
 
     {{#each patients}}
     <tr>
-      <td>{{this.name}}</td>
+      <td><a href="">{{this.name}}</a></td>
       <td>{{this.age}}</td>
       <td>{{this.gender}}</td>
       <td>{{this.contact}}</td>
       <td>{{this.address}}</td>
-      <td><a href="">Edit</a> </td>
+      <td>
+        <a href="">Edit</a>
+      </td>
     </tr>
   {{/each}}
 
