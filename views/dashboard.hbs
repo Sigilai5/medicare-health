@@ -45,31 +45,32 @@
   </thead>
  
   <tbody>
-    
-    
+
+    {{#each patients}}
     <tr>
-      <td>this</td>
-      <td>this</td>
-      <td>this</td>
-      <td>this</td>
-      <td>this</td>
+      <td>{{this.name}}</td>
+      <td>{{this.age}}</td>
+      <td>{{this.gender}}</td>
+      <td>{{this.contact}}</td>
+      <td>{{this.address}}</td>
       <td><a href="">Edit</a> </td>
     </tr>
-   
+  {{/each}}
+
   </tbody>
   <tfoot>
     <tr>
       <th>Name
       </th>
-      <th>Position
-      </th>
-      <th>Office
-      </th>
       <th>Age
       </th>
-      <th>Start date
+      <th>Gender
       </th>
-      <th>Salary
+      <th>Contact
+      </th>
+      <th>Address
+      </th>
+      <th><a href="Edit"></a>
       </th>
     </tr>
   </tfoot>

@@ -11,10 +11,10 @@
 
       <form action="/addRecord" method="post">
             <h3>Add Record </h3>
-            <input type="text" name="patientid" required placeholder={{response.patientid}}>
-            <input type="text" name="condition" required placeholder={{response.condition}}>
-            <input type="text" name="description" required placeholder={{response.description}}>
-            <input type="text" name="prescription" required placeholder={{response.prescription}}>
+            <input type="text" name="patientid" required value={{response.patientid}}>
+            <input type="text" name="condition" required value={{response.condition}}>
+            <input type="text" name="description" required value={{response.description}}>
+            <input type="text" name="prescription" required value={{response.prescription}}>
             <input type="submit" name="submit" value="Add record" class="form-btn">
 </body>
 </html>

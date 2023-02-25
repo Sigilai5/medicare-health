@@ -57,7 +57,7 @@ app.get('/dashboard', (req, res) => {
   const user = users.find(u => u.id === req.session.userId);
 
   // Serve the dashboard HTML page and replace [username] with the actual username
-  res.render('dashboard', {username: user.username,patients:patients});
+  res.render('dashboard', {patients:patients});
 
   // const dashboardPage = fs.readFileSync(__dirname + '/public/dashboard.html', 'utf8');
   // const renderedPage = dashboardPage.replace('[username]', user.username);
@@ -226,7 +226,7 @@ app.post('/addrecord', (req,res)=>{
   const { patientid, condition, description, gender,prescription } = req.body;
   let records = [];
   records = JSON.parse(fs.readFileSync('./Data/records.json'));
-
+  
   const record={
     id: records.length +1,
     patientid:patientid,
