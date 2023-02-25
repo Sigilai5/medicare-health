@@ -6,6 +6,8 @@ const { Doctor,Receiptionist }= require('./user.js');
 
 const app = express();
 
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: 'mysecretkey',
@@ -34,6 +36,8 @@ app.post('/login', (req, res) => {
   } else {
     // Store user ID in session
     req.session.userId = user.id;
+    req.session.username = user.username;
+    req.session.user_type = user.user_type;
     res.redirect('/dashboard');
   }
 });
@@ -107,25 +111,39 @@ app.post('/register', (req, res) => {
 
 //get a specific patient
 
-app.get('/getPatient',(req,res)=>{
+app.get('/getPatient/:id',(req,res)=>{
   if (!req.session.userId) {
     res.redirect('/login');
     return;
   }
-  
-  if (req.session.user_type==='doctor') {
-    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
-    const response=doctor.fetchPatient(req.body.id)
-    res.send(response);
-  }else if (req.session.user_type==='receptionist') {
-    const receptionist=Receiptionist(req.session.userId,req.session.username,req.session.user_type)
-    const response=receptionist.fetchPatient(req.body.id)
-    res.send(response);
+
+  id=req.session.userId
+  userName=req.session.username
+  userType=req.session.user_type
+
+  console.log(id,userName,userType)
+  userType=req.session.user_type
+  if (userType=='doctor') {
+    const doctor=new Doctor(id,userName,userType)
+    const patient= doctor.fetchPatient( req.params.id)
+    res.render('patient',{patient:patient});
+  }else if (userType=='receptionist') {
+    const receptionist=new Receiptionist(id,userName,userType)
+    const patient=receptionist.fetchPatient(parseInt(req.params.id))
+    console.log(patient)
+    res.render('patient',{patient:patient});
   }
 
 });
 
 // add/update a patient
+app.get('/addPatient', (req,res)=>{
+  if (!req.session.userId) {
+    res.redirect('/login');
+    return;
+  }
+  res.render('PatientAdd');
+  });
 
 app.post('/addPatient', (req,res)=>{
   if (!req.session.userId) {
@@ -181,7 +199,7 @@ app.delete('/deletePatient', (req,res)=>{
 
 //get a specific record
 
-app.get('/getRecord',(req,res)=>{
+app.get('/getRecord/:id',(req,res)=>{
   if (!req.session.userId) {
     res.redirect('/login');
     return;
@@ -189,7 +207,7 @@ app.get('/getRecord',(req,res)=>{
   
   if (req.session.user_type==='doctor') {
     const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
-    const response=doctor.fetchRecords(req.body.id)
+    const response=doctor.fetchRecords(req.params.id)
     res.send(response);
   }else if (req.session.user_type==='receptionist') {
     return res.status(400).json({ error: "You are not allowed to access Records" });

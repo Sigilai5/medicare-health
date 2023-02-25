@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <div class="form-container">
+
+      <form action="/addPatient" method="post">
+            <h3>Add Patient </h3>
+            <input type="text" name="name" required placeholder="enter patient username">
+            <input type="text" name="age" required placeholder="Age">
+            <input type="text" name="contact" required placeholder="contact">
+            
+               <select name="user_type">
+                <option value="doctor">male</option>
+                <option value="receptionist" selected>female</option>
+                <input type="text" name="address" required placeholder="address">
+      </select>
+            <input type="submit" name="submit" value="register now" class="form-btn">
+</body>
+</html>

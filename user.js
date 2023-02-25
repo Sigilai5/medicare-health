@@ -1,7 +1,5 @@
 
 const fs = require('fs');
-
-
 class User {
     constructor(userId,username) {
       this.username = username;
@@ -128,7 +126,8 @@ class User {
     
   }
 
+
 module.exports={
-  Receiptionist:Receiptionist,
-  Doctor:Doctor
+    Doctor:Doctor,
+    Receiptionist:Receiptionist
 }
