@@ -47,7 +47,7 @@ class User {
     deletePatient= (patientId)=>{
       let patients = [];
       patients = JSON.parse(fs.readFileSync('./Data/patients.json'));
-      if (!patients.find(usr => usr.id === patient.id)) {
+      if (!patients.find(usr => usr.id === patientId)) {
         return { error: 'Patient does not exist!!' };
       }else{
         const patient = patients.find(u => u.id === patientId);

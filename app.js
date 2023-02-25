@@ -178,18 +178,18 @@ app.post('/addPatient', (req,res)=>{
 });
 
 //delete a patient 
-app.delete('/deletePatient', (req,res)=>{
+app.get('/deletePatient/:id', (req,res)=>{
   if (!req.session.userId) {
     res.redirect('/login');
     return;
   }
   if (req.session.user_type=='doctor') {
     const doctor= new Doctor(req.session.userId,req.session.username,req.session.user_type)
-    const response=doctor.deletePatient(parseInt(req.body.id))
+    const response=doctor.deletePatient(parseInt(req.params.id))
     res.send(response);
   }else if (req.session.user_type=='receptionist') {
     const receptionist=new Receiptionist(req.session.userId,req.session.username,req.session.user_type)
-    const response=receptionist.deletePatient(parseInt(req.body.id))
+    const response=receptionist.deletePatient(parseInt(req.params.id))
     res.send(response);
   }
 });
@@ -206,9 +206,9 @@ app.get('/getRecord/:id',(req,res)=>{
   }
   
   if (req.session.user_type==='doctor') {
-    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
-    const response=doctor.fetchRecords(req.params.id)
-    res.send(response);
+    const doctor=new Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const record=doctor.fetchRecords(parseInt(req.params.id))
+    res.render('record',{response:record});
   }else if (req.session.user_type==='receptionist') {
     return res.status(400).json({ error: "You are not allowed to access Records" });
   }
@@ -237,7 +237,7 @@ app.post('/addrecord', (req,res)=>{
 
 
   if (req.session.user_type==='doctor') {
-    const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
+    const doctor=new Doctor(req.session.userId,req.session.username,req.session.user_type)
     const response=doctor.setRecords(record)
     res.send(response);
   }else if (req.session.user_type==='receptionist') {
@@ -247,14 +247,14 @@ app.post('/addrecord', (req,res)=>{
 });
 
 //delete a record 
-app.delete('/deleteRecord', (req,res)=>{
+app.get('/deleteRecord/:id', (req,res)=>{
   if (!req.session.userId) {
     res.redirect('/login');
     return;
   }
-  if (req.session.user_type==='doctor') {
+  if (req.session.user_type=='doctor') {
     const doctor=Doctor(req.session.userId,req.session.username,req.session.user_type)
-    const response=doctor.deleteRecord(req.body.id)
+    const response=doctor.deleteRecord(parseInt(req.params.id))
     res.send(response);
   }else if (req.session.user_type==='receptionist') {
     return res.status(400).json({ error: "You are not allowed to access Records" });
