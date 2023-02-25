@@ -51,12 +51,13 @@ app.get('/dashboard', (req, res) => {
 
   // Load user data from JSON file
   const users = JSON.parse(fs.readFileSync('./Data/users.json'));
-  const patients = JSON.parse(fs.readFileSync('./Data/users.json'));
+  const patients = JSON.parse(fs.readFileSync('./Data/patients.json'));
 
   // Find user by ID
   const user = users.find(u => u.id === req.session.userId);
 
   // Serve the dashboard HTML page and replace [username] with the actual username
+  console.log(patients)
   res.render('dashboard', {patients:patients});
 
   // const dashboardPage = fs.readFileSync(__dirname + '/public/dashboard.html', 'utf8');
