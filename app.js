@@ -59,6 +59,10 @@ app.get('/dashboard', (req, res) => {
   // Load patient data from JSON file
   const patients = JSON.parse(fs.readFileSync('./Data/patients.json'));
 
+  // Load patients whose status is pending
+  const pendingPatients = patients.filter(patient => patient.status === 'pending');
+
+
   // Find user by ID
   const user = users.find(u => u.id === req.session.userId);
 
@@ -66,7 +70,7 @@ app.get('/dashboard', (req, res) => {
   console.log(`User ${user.username} is logged in`);
 
   // Serve the dashboard HTML page and replace [username] with the actual username
-  res.render('dashboard', {username: user.username,patients:patients});
+  res.render('dashboard', {username: user.username,patients:pendingPatients});
 
   // const dashboardPage = fs.readFileSync(__dirname + '/public/dashboard.html', 'utf8');
   // const renderedPage = dashboardPage.replace('[username]', user.username);
@@ -177,6 +181,12 @@ app.get('/getPatients', function (req, res) {
 app.get('/history', function (req, res) {
   if (!req.session.userId) {
     res.redirect('/login');
+    return;
+  }
+
+  // Check if user is receptionist
+  if (req.session.user_type === 'receptionist') {
+    res.redirect('/appointments');
     return;
   }
 
