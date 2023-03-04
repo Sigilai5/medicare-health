@@ -9,85 +9,90 @@
 </head>
 <body>
 
-    	<div class="splash">
-		<img src="images/medilogo.jpg" alt="Splash Logo">
-	</div>
-
-    <div class="content">
-
-        
-		<!--Website content goes here -->
-        <nav>
-
-        <div class="navbar">
-
-            <div class="logo"><img src="images/medilogo.jpg" alt="" width="138px" height="42px"></div>
-
-
-        </div>
-    </nav>
-
-    <div class="form-container">
-
-        <form action="/login" method="post">
-            <h3>login</h3>
-
-            <input type="text" name="username" required placeholder="enter your username">
-            <input type="password" name="password" required placeholder="enter your password">
-            <input type="submit" name="submit" value="login now" class="form-btn">
-
-      <p>don't have an account? <a href="/register">register now</a></p>
-        
-   </form>
-
-            </form>
+    <div class="splash">
+      <img src="images/MedicareLogo.jpg" alt="Splash Logo">
     </div>
 
+    <div class="content">
+    
+      <!--Website content goes here -->
+      <div class = "leftBar">
+        <div class = "quoteText"></div>
+        <div class = "quotationMks"></div>
+      </div>
+      
+      <div class = "rightBar">
+      <div class = "rightSideLogo"></div>
+      <div class="form-container">
 
-	</div>
+        <form action="/login" method="post">
+          <h3>Hello Again!</h3>
+          <div class = "captionText"></div>
+
+          <input type="text" name="username" required placeholder="Username">
+          <input type="password" name="password" required placeholder="Password">
+          <input type="submit" name="submit" value="Login" class="form-btn">
+
+          <p>Don't have an account yet? <a href="/register">Sign Up</a></p>
+          
+        </form>
+
+      </div>
+      </div>
+
+    </div>
 
   <script>
     window.addEventListener('load', function(){
-    setTimeout(function(){
-        document.querySelector('.splash').style.display = 'none';
-        document.querySelector('.content').style.display = 'block';
-    }, 2000);
-});
+      setTimeout(function(){
+          document.querySelector('.splash').style.display = 'none';
+          document.querySelector('.content').style.display = 'block';
+      }, 2000);
+    });
 
 
   </script>
 
 
-    <script>
+  <script>
 
-// Handle form submission
-const form = document.querySelector('form');
-form.addEventListener('submit', async (event) => {
-  event.preventDefault();
+  // Handle form submission
+  const form = document.querySelector('form');
+  
+  form.addEventListener('submit', async (event) => {
+    
+    event.preventDefault();
 
-  const username = form.elements.username.value;
-  const password = form.elements.password.value;
+    const username = form.elements.username.value;
+    const password = form.elements.password.value;
 
-  // Send request to server to  user
-  const response = await fetch('/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    // Send request to server to  user
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      
+      body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    
+    });
+
+    if (response.ok) {
+
+      // Registration successful, redirect to login page
+      window.location.href = '/dashboard';
+    
+    } else {
+    
+      // Registration failed, display error message
+      const data = await response.json();
+      alert(data.error);
+    
+    }
+  
   });
 
-  if (response.ok) {
-    // Registration successful, redirect to login page
-    window.location.href = '/dashboard';
-  } else {
-    // Registration failed, display error message
-    const data = await response.json();
-    alert(data.error);
-  }
-});
-
-    </script>
+  </script>
     
 </body>
 </html>
