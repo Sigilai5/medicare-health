@@ -2,6 +2,7 @@
 
 *{
    font-family: 'Poppins', sans-serif;
+   font-size: small;
    margin:0; padding:0;
    box-sizing: border-box;
    outline: none; border:none;
@@ -60,29 +61,92 @@
     background: crimson;
  }
  
+
+ .rightSideLogo {
+   height: 10rem;
+   width: 10rem;
+   border-radius: 50%;
+   position:absolute;
+   top: 12%;
+   left: 50%;
+   transform: translate(-50%, -12%);
+   background-image: url(images/roundLogo.png);
+   background-position: 0%;
+   background-size: contain;
+ }
+
+ .rightBar {
+   position: absolute;
+   height: 100%;
+   width: 50%;
+   right: 0;
+   background: #ffffff;
+ }
+
+ .leftBar {
+   position: absolute;
+   height: 100%;
+   width: 50%;
+   left: 0;
+   background-image: url('images/LeftGrad.jpg');
+}
+
+.quotationMks {
+   height: 12%;
+   width: 12%;
+   position: absolute;
+   left: 12%;
+   top: 18%;
+   background-repeat: no-repeat;
+   background-image: url('images/quote.png');
+}
+
+.quoteText {
+   height: 60%;
+   width: 76%;
+   position: absolute;
+   top: 85%;
+   left: 50%;
+   transform: translate(-50%, -85%);
+   background-image: url(images/medicareText.png);
+   background-repeat: no-repeat;
+}
+
+.captionText {
+   height: 10%;
+   width: 100%;
+   position: absolute;
+   scale: 0.8;
+   top: 25%;
+   left: 30%;
+   transform: translate(-35%, -25%);
+   background-image: url(images/captionText.png);
+   background-repeat: no-repeat;
+}
+
  .form-container{
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding:20px;
-    padding-bottom: 60px;
-    background: #eee;
+   width: auto;
+   height: auto;
+   max-width: 100%;
+   max-height: 100%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background: white;
  }
  
  .form-container form{
-    padding:20px;
-    border-radius: 5px;
-    box-shadow: 0 5px 10px rgba(0,0,0,.1);
-    background: #fff;
+    padding:10%;
+    background: #ffffff;
     text-align: center;
     width: 500px;
  }
  
  .form-container form h3{
     font-size: 30px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 25%;
     color:#333;
  }
  
@@ -91,9 +155,12 @@
     width: 100%;
     padding:10px 15px;
     font-size: 17px;
-    margin:8px 0;
+    margin:15px 0;
     background: #eee;
-    border-radius: 5px;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #B7525F;
  }
  
  .form-container form select option{
@@ -101,32 +168,27 @@
  }
  
  .form-container form .form-btn{
-    background: #fbd0d9;
-    color:crimson;
+    background: #B7525F;
+    color: white;
     text-transform: capitalize;
     font-size: 20px;
     cursor: pointer;
  }
  
- .form-container form .form-btn:hover{
-    background: crimson;
-    color:#fff;
- }
- 
  .form-container form p{
-    margin-top: 10px;
+    margin-bottom: 0px;
     font-size: 20px;
     color:#333;
  }
  
  .form-container form p a{
-    color:crimson;
+    color: #B7525F;
  }
  
  .form-container form .error-msg{
     margin:10px 0;
     display: block;
-    background: crimson;
+    background: #B7525F;
     color:#fff;
     border-radius: 5px;
     
@@ -136,28 +198,31 @@
 
 
  .splash {
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   background-color: #ffffff;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   z-index: 9999;
+   position: absolute;
+   width: 40%;
+   height: 40%;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background-color: rgba(255, 255, 255, 0);
 }
 
 .splash img {
+   width: auto;
+   height: auto;
    max-width: 100%;
    max-height: 100%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
 }
 
 .content {
    display: none;
 }
 
-#quote {
+#quote { 
 /* “ */
 
 
